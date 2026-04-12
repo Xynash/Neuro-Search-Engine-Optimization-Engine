@@ -1,40 +1,34 @@
 import Groq from "groq-sdk";
 import { NextResponse } from "next/server";
 
-// Check if we are using the env or hardcoded key
-const API_KEY = process.env.GROQ_API_KEY || "PASTE_YOUR_KEY_HERE_ONLY_IF_ENV_FAILS";
-
-const groq = new Groq({
-  apiKey: API_KEY,
-});
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
 
 export async function POST(req: Request) {
   try {
     const { message, isPlayground } = await req.json();
 
-    const systemPrompt = isPlayground 
-      ? "You are 'GUIDE-BOT-01', a nerdy SEO architect. Help the user."
-      : "You are the 'Neural Oracle', a professional SEO assistant.";
+    const systemPrompt = `
+      You are the ${isPlayground ? 'GUIDE-BOT-01 Nerd' : 'Neural Oracle'}.
+      STYLE RULES:
+      1. Use Emojis in EVERY response to look interactive. 🚀
+      2. Use Markdown: **Bold** important SEO terms and use bullet points.
+      3. Be punchy: No long paragraphs. Max 3 sentences per point.
+      4. Personality: ${isPlayground ? 'Extremely nerdy, loves space metaphors.' : 'High-end, elite SEO consultant.'}
+      
+      CONTEXT: You power NeuralEngine SEO. We use BERT-transformers for Semantic DNA and Galaxy Playground for Rank Gravity simulations.
+    `;
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: message },
       ],
-      // Let's use a very reliable model name
-      model: "mixtral-8x7b-32768", 
-      temperature: 0.6,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.8, // Slightly higher for more creative/interactive personality
     });
 
     return NextResponse.json({ text: chatCompletion.choices[0]?.message?.content });
-
   } catch (error: any) {
-    // THIS PART IS CRUCIAL: Check your VS Code terminal for this output
-    console.log("--- GROQ ERROR DETECTED ---");
-    console.error(error.message); 
-    
-    return NextResponse.json({ 
-      text: `Engine Error: ${error.message.substring(0, 50)}...` 
-    }, { status: 500 });
+    return NextResponse.json({ text: "❌ Connection lost to BERT Core." }, { status: 500 });
   }
 }
