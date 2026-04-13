@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, CSSProperties } from 'react';
 import ReactFlow, { 
   Background, Controls, MiniMap, useNodesState, useEdgesState, addEdge, Connection, Edge, MarkerType 
 } from 'reactflow';
@@ -7,6 +7,7 @@ import 'reactflow/dist/style.css';
 import { motion } from 'framer-motion';
 import { Cpu, Zap, Plus, Globe, LogOut, Orbit, Sparkles, Box, Database, Share2, BookOpen, ChevronRight } from 'lucide-react';
 import Link from "next/link";
+import { Node } from 'reactflow';
 
 // --- GALAXY THEME CONSTANTS ---
 const edgeOptions = { 
@@ -16,7 +17,7 @@ const edgeOptions = {
 };
 
 const initialNodes = [
-  { id: '1', position: { x: 400, y: 100 }, data: { label: 'PILLAR: ROOT DOMAIN' }, type: 'input', style: { background: 'radial-gradient(circle, #fb923c 0%, #f97316 100%)', color: '#000', borderRadius: '50%', width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: '900', border: 'none', boxShadow: '0 0 60px rgba(249, 115, 22, 0.6)', fontSize: '12px' } }
+  { id: '1', position: { x: 400, y: 100 }, data: { label: 'PILLAR: ROOT DOMAIN' }, type: 'input', style: { background: 'radial-gradient(circle, #fb923c 0%, #f97316 100%)', color: '#000', borderRadius: '50%', width: 160, height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' as CSSProperties['textAlign'], fontWeight: '900', border: 'none', boxShadow: '0 0 60px rgba(249, 115, 22, 0.6)', fontSize: '12px' } }
 ];
 
 export default function PerfectSEOPlayground() {
@@ -27,27 +28,29 @@ export default function PerfectSEOPlayground() {
   const onConnect = useCallback((params: Connection | Edge) => setEdges((eds) => addEdge({ ...params, ...edgeOptions, label: 'Authority Flow', labelStyle: { fill: '#fff', fontSize: '10px', fontWeight: 900 }, labelBgStyle: { fill: '#000', fillOpacity: 0.7 } }, eds)), [setEdges]);
 
   // --- NODE SPAWNING LOGIC (Sidebar Button Actions) ---
-  const spawnNode = (type: string) => {
-    const id = `${nodes.length + 1}`;
-    let nodeStyle = {};
-    let label = "";
+ // ...existing code...
+const spawnNode = (type: string) => {
+  const id = `${nodes.length + 1}`;
+  let nodeStyle = {};
+  let label = "";
 
-    if(type === 'Pillar') {
-        label = `PILLAR: ${id}`;
-        nodeStyle = { background: '#f97316', color: '#000', borderRadius: '50%', width: 150, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', boxShadow: '0 0 30px #f97316', border: 'none' };
-    } else if(type === 'Competitor') {
-        label = `EXTERNAL: ${id}`;
-        nodeStyle = { background: '#ef4444', color: '#fff', borderRadius: '15px', padding: '15px', fontWeight: 'bold', border: 'none', boxShadow: '0 0 20px #ef4444', width: 180 };
-    } else if(type === 'Entity') {
-        label = `BERT: ENTITY ${id}`;
-        nodeStyle = { background: '#000', color: '#fbbf24', borderRadius: '50%', width: 110, height: 110, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed #fbbf24', fontSize: '10px', fontWeight: '900', boxShadow: '0 0 15px #fbbf24' };
-    } else {
-        label = `SUBPAGE: /${id}`;
-        nodeStyle = { background: '#050505', color: '#a855f7', borderRadius: '20px', padding: '15px', border: '2px solid #a855f7', fontWeight: 'bold', width: 170, textAlign: 'center', boxShadow: '0 0 20px rgba(168,85,247,0.3)' };
-    }
+  if(type === 'Pillar') {
+      label = `PILLAR: ${id}`;
+      nodeStyle = { background: '#f97316', color: '#000', borderRadius: '50%', width: 150, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', boxShadow: '0 0 30px #f97316', border: 'none' };
+  } else if(type === 'Competitor') {
+      label = `EXTERNAL: ${id}`;
+      nodeStyle = { background: '#ef4444', color: '#fff', borderRadius: '15px', padding: '15px', fontWeight: 'bold', border: 'none', boxShadow: '0 0 20px #ef4444', width: 180 };
+  } else if(type === 'Entity') {
+      label = `BERT: ENTITY ${id}`;
+      nodeStyle = { background: '#000', color: '#fbbf24', borderRadius: '50%', width: 110, height: 110, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed #fbbf24', fontSize: '10px', fontWeight: '900', boxShadow: '0 0 15px #fbbf24' };
+  } else {
+      label = `SUBPAGE: /${id}`;
+      nodeStyle = { background: '#050505', color: '#a855f7', borderRadius: '20px', padding: '15px', border: '2px solid #a855f7', fontWeight: 'bold', width: 170, boxShadow: '0 0 20px rgba(168,85,247,0.3)' };
+  }
 
-    setNodes((nds) => nds.concat({ id, position: { x: Math.random() * 500 + 100, y: Math.random() * 400 + 100 }, data: { label }, style: nodeStyle }));
-  };
+  setNodes((nds) => nds.concat({ id, position: { x: Math.random() * 500 + 100, y: Math.random() * 400 + 100 }, data: { label }, type: 'default', style: nodeStyle }));
+};
+// ...existing code...
 
   return (
     <div className="h-screen w-full bg-[#020202] flex flex-col overflow-hidden font-mono text-white relative">
