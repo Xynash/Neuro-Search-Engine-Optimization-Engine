@@ -1,0 +1,7 @@
+[33m9dc71ed[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/backend[m[33m)[m HEAD@{0}: pull --rebase origin backend (start): checkout 9dc71edd20aaafd1f948db56b82197b05f7a9dc4
+[33m85651c9[m[33m ([m[1;32mbackend[m[33m)[m HEAD@{1}: commit: Backend completed using gemini api key
+[33m2109b72[m HEAD@{2}: checkout: moving from frontend to backend
+[33mcf0f6ea[m[33m ([m[1;31morigin/frontend[m[33m, [m[1;32mfrontend[m[33m)[m HEAD@{3}: commit: modified page.tsx
+[33mcff4c9f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: checkout: moving from dashboard to frontend
+[33mcff4c9f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from main to dashboard
+[33mcff4c9f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{6}: clone: from https://github.com/Xynash/Neuro-Search-Engine-Optimization-Engine.git
